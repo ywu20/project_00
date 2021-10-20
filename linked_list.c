@@ -35,10 +35,21 @@ struct song_node * insert_order(struct song_node * start, char artist[100],char 
  //initialize new struct
   strcpy(p->artist,artist);
   strcpy(p->name, name);
+ 
+ //making the strings that will be compared
+  p_str = p->artist;
+  start_str = start->artist;
   
+  strcat(p_str, p->name);
+  strcat(start_str, start-> name);
 
-  //set new struct's next to point to given struct
-  //p->next = start;
+  //find correct position to insert the new struct
+  while(strcmp(p_str,start_str)<=0 && ){
+   start = start ->next;
+   start_str = start->artist;
+   strcat(start_str, start-> name);
+  }
+  p->next = start;
   return p;
 }
 
