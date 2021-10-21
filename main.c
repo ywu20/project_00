@@ -43,7 +43,12 @@ int main(){
 
  // construct a linked list for test 
  struct song_node * start;
- construct_list(start, 'f');
+ 
+ //test list for insert front
+ //construct_list(start, 'f'); 
+ 
+ //test list for insert order
+ construct_list(start, 'o');
 
  return 0;
 }
