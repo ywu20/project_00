@@ -31,7 +31,7 @@ struct song_node * insert_front(struct song_node * start, char artist[100], char
 struct song_node * insert_order(struct song_node * start, char artist[100],char name[100]){
  //allocate memory for new struct 
  struct song_node * p = malloc(sizeof(struct song_node));
-
+ struct song_node * temp = start;
  //initialize new struct
   strcpy(p->artist,artist);
   strcpy(p->name, name);
@@ -55,20 +55,53 @@ struct song_node * insert_order(struct song_node * start, char artist[100],char 
   printf("start_str cating name: %s\n", start_str);
 
   //find correct position to insert the new struct, keep track of prev
-  printf ("comparison: %d\n", strcmp(p_str,start_str));
-  while(strcmp(p_str,start_str)>0){
+  printf ("comparison: %d\n", strcmp("pink floyd","pink"));
+  struct song_node * prev = start;
+  int front = 1;
+     printf("continue: %d\n", cont(p,start));
+  while(start -> next && cont(p,start)){
+   front = 0;
+   prev = start;
    start = start ->next; //next is null
+   printf("Start: %s, %s\n", start -> artist, start ->name);
+   printf("continue: %d\n", cont(p,start));
+  
+   }
    //strncpy(start_str, start->artist, sizeof(start->artist));
    //strcat(start_str, start-> name);
-   //printf("Start: %s, %s\n", start -> artist, start ->name);
-  }
-  
-  //p->next = start;
+
+  //}
+  // should go before start
+   p->next = start;
+   
+  //p->next = start -> next;
+  //start ->next = p;
   //prev -> next = p;
   printf("====================\n");
-  return p;
+  if (front) return p;
+  else{
+  prev -> next = p;
+  return temp;
+  }
 }
 
+int cont (struct song_node * p, struct song_node * start){
+   int cmp = strcmp(p->artist,start->artist);
+   printf("cmp: %d\n",cmp);
+   if (cmp<0){
+    printf("artist is before\n");
+    return 0;
+   }else if (cmp == 0){
+    if(strcmp(p->name,start->name)<=0){
+     return 0;
+    }else{
+     return 1;
+    }
+    }
+   else{
+    return 1;
+   }
+}
 /*************compare song nodes, returns < 0 if n1 goes before n2, if 0 the same, if > 0 n2 goes before n1*************/
 int node_cmp (struct song_node * n1, struct song_node * n2);
 
