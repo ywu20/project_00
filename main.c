@@ -23,10 +23,13 @@ struct song_node * construct_list (struct song_node * start, char type){
  
  else{
  //insert_order initialize test
- start = insert_order (start, "pearl jam", "even flow");
- start = insert_order (start, "pink", "space"); 
- start = insert_order (start, "pearl jam", "yellow ledbetter");
- start = insert_order (start, "pearl jam", "alive");
+ start = insert_front (start, "pink", "space");
+ //start = insert_front (start, "pearl jam", "even flow");
+ //print_list(start); 
+ //start = insert_order (start, "pearl jam", "yellow ledbetter");
+ //print_list(start);
+ //start = insert_order (start, "pearl jam", "alive");
+ //print_list(start);
  start = insert_order (start, "pink floyd", "time");
  
  //prints the list
