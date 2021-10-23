@@ -13,95 +13,97 @@ struct song_node *next;
 /****************insert nodes at the front*******************/
 struct song_node * insert_front(struct song_node * start, char artist[100], char name[100]){
 
- //allocate memory for new struct 
+ //allocate memory for new struct
  struct song_node * p = malloc(sizeof(struct song_node));
 
  //initialize new struct
   strcpy(p->artist,artist);
   strcpy(p->name, name);
-  
+
 
   //set new struct's next to point to given struct
   p->next = start;
   return p;
 }
 
-
 /************insert nodes in order, alphabetically by Artist then by Song***********/
+
+//helper function for insert_order to determine whether to move to the next node or not.
+int cont (struct song_node * p, struct song_node * start){
+   int cmp = strcmp(p->artist,start->artist); // artist string comparison
+
+   // if artist should go after or artist the same but name should go after, let the loop run
+   if ((cmp>0) || ((cmp == 0) && strcmp(p->name,start->name)>0)) return 1;
+
+   //otherwise stop
+    return 0;
+}
+
+// insert nodes in order, alphabetically by Artist then by Song
 struct song_node * insert_order(struct song_node * start, char artist[100],char name[100]){
- //allocate memory for new struct 
+
+ //allocate memory for new struct
  struct song_node * p = malloc(sizeof(struct song_node));
+
+ // keeps track of the starting point
  struct song_node * temp = start;
+
  //initialize new struct
   strcpy(p->artist,artist);
   strcpy(p->name, name);
- 
- if(start == NULL){
-  return p;
- }
- //making the strings that will be compared
- printf("====================\n");
-  char p_str[200];  
-  strncpy(p_str, p->artist, sizeof(p->artist));
-  //strcpy(p_str, p->artist);
-  printf("p_str copying artist: %s\n", p_str);
-  char start_str[200]; 
-  strncpy(start_str, start->artist, sizeof(start->artist));
- //strcpy(start_str, start->artist);
-  printf("start_str copying artist: %s\n", start_str);
-  strcat(p_str, p->name);
-  printf("p_str cating name: %s\n", p_str);
-  strcat(start_str, start-> name);
-  printf("start_str cating name: %s\n", start_str);
 
-  //find correct position to insert the new struct, keep track of prev
-  printf ("comparison: %d\n", strcmp("pink floyd","pink"));
-  struct song_node * prev = start;
+//if the list is empty
+ if(start == NULL) return p;
+
+// printf("====================\n");
+
+//keeps track of whether p is the first or not
   int front = 1;
-     printf("continue: %d\n", cont(p,start));
-  while(start -> next && cont(p,start)){
-   front = 0;
-   prev = start;
-   start = start ->next; //next is null
-   printf("Start: %s, %s\n", start -> artist, start ->name);
-   printf("continue: %d\n", cont(p,start));
-  
-   }
-   //strncpy(start_str, start->artist, sizeof(start->artist));
-   //strcat(start_str, start-> name);
 
-  //}
-  // should go before start
+//keep track of the previious node for insertion later
+  struct song_node * prev = start;
+
+  //find correct position to insert the new struct
+  while(cont(p,start)){
+   front = 0; //if proceeds into the loop it's not the front
+
+   //checks if it's the end of the original list
+   if(start -> next == NULL){
+
+     //insert p to the end.
+     start -> next = p;
+     return temp;
+   }
+//   printf("Start: %s, %s\n", start -> artist, start ->name);
+   //printf("continue: %d\n", cont(p,start));
+
+   //reset prev
+   prev = start;
+
+   //move to the next node
+   start = start ->next;
+   }
+
+  //p should go before start and after prev
    p->next = start;
-   
-  //p->next = start -> next;
-  //start ->next = p;
-  //prev -> next = p;
-  printf("====================\n");
+
+
+
+  //printf("====================\n");
+
+  // if p is in the front, p would be the start.
   if (front) return p;
+
   else{
+  // linking the node that goes before p.
   prev -> next = p;
+
+  //returns the original start of the linked list.
   return temp;
   }
 }
 
-int cont (struct song_node * p, struct song_node * start){
-   int cmp = strcmp(p->artist,start->artist);
-   printf("cmp: %d\n",cmp);
-   if (cmp<0){
-    printf("artist is before\n");
-    return 0;
-   }else if (cmp == 0){
-    if(strcmp(p->name,start->name)<=0){
-     return 0;
-    }else{
-     return 1;
-    }
-    }
-   else{
-    return 1;
-   }
-}
+
 /*************compare song nodes, returns < 0 if n1 goes before n2, if 0 the same, if > 0 n2 goes before n1*************/
 int node_cmp (struct song_node * n1, struct song_node * n2);
 
