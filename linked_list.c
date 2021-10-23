@@ -26,20 +26,26 @@ struct song_node * insert_front(struct song_node * start, char artist[100], char
   return p;
 }
 
-/************insert nodes in order, alphabetically by Artist then by Song***********/
 
-//helper function for insert_order to determine whether to move to the next node or not.
-int cont (struct song_node * p, struct song_node * start){
-   int cmp = strcmp(p->artist,start->artist); // artist string comparison
 
-   // if artist should go after or artist the same but name should go after, let the loop run
-   if ((cmp>0) || ((cmp == 0) && strcmp(p->name,start->name)>0)) return 1;
+/*************compare song nodes, returns < 0 if n1 goes before n2, if 0 the same, if > 0 n2 goes before n1*************/
+int node_cmp (struct song_node * p, struct song_node * start){
+  // artist string comparison
+   int cmp_art = strcmp(p->artist,start->artist);
+   //name string comparison
+   int cmp_name = strcmp(p->name,start->name);
 
-   //otherwise stop
-    return 0;
+   //p goes after start
+   if ((cmp_art>0) || ((cmp_art == 0) && cmp_name>0)) return 1;
+
+   //equal
+   else if((cmp_art == 0) && (cmp_name == 0)) return 0;
+
+   //p goes before start
+   return -1;
 }
 
-// insert nodes in order, alphabetically by Artist then by Song
+/************insert nodes in order, alphabetically by Artist then by Song***********/
 struct song_node * insert_order(struct song_node * start, char artist[100],char name[100]){
 
  //allocate memory for new struct
@@ -64,7 +70,7 @@ struct song_node * insert_order(struct song_node * start, char artist[100],char 
   struct song_node * prev = start;
 
   //find correct position to insert the new struct
-  while(cont(p,start)){
+  while(node_cmp(p,start)>0){
    front = 0; //if proceeds into the loop it's not the front
 
    //checks if it's the end of the original list
@@ -102,10 +108,6 @@ struct song_node * insert_order(struct song_node * start, char artist[100],char 
   return temp;
   }
 }
-
-
-/*************compare song nodes, returns < 0 if n1 goes before n2, if 0 the same, if > 0 n2 goes before n1*************/
-int node_cmp (struct song_node * n1, struct song_node * n2);
 
 /***********print the entire list*****************/
 void print_list (struct song_node * node){
