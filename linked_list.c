@@ -61,11 +61,8 @@ struct song_node * insert_order(struct song_node * start, char artist[100],char 
 //if the list is empty
  if(start == NULL) return p;
 
-// printf("====================\n");
-
 //keeps track of whether p is the first or not
   int front = 1;
-
 //keep track of the previious node for insertion later
   struct song_node * prev = start;
 
@@ -75,51 +72,63 @@ struct song_node * insert_order(struct song_node * start, char artist[100],char 
 
    //checks if it's the end of the original list
    if(start -> next == NULL){
-
      //insert p to the end.
      start -> next = p;
      return temp;
    }
 //   printf("Start: %s, %s\n", start -> artist, start ->name);
-   //printf("continue: %d\n", cont(p,start));
-
    //reset prev
    prev = start;
-
    //move to the next node
    start = start ->next;
    }
 
   //p should go before start and after prev
    p->next = start;
-
-
-
-  //printf("====================\n");
-
   // if p is in the front, p would be the start.
   if (front) return p;
 
   else{
   // linking the node that goes before p.
   prev -> next = p;
-
   //returns the original start of the linked list.
   return temp;
   }
 }
 
+/***********prints a node******************/
+void print_node (struct song_node * node){
+  if (node == NULL) printf("NULL\n");
+  else printf("{%s, %s, %p }\n", node -> artist, node -> name, node ->next);
+}
+
 /***********print the entire list*****************/
 void print_list (struct song_node * node){
   while(node){
-  printf("{%s, %s, %p }\n", node -> artist, node -> name, node ->next);
+  print_node(node);
   node = node ->next;
 }
 }
 
 
-//find and return a pointer to a node based on artist and song name
-struct song_node * find_song(struct song_node * start, char artist[100], char name[100]);
+/***********find and return a pointer to a node based on artist and song name***********/
+struct song_node * find_song(struct song_node * start, char artist[100], char name[100]){
+  // creates a node and initialize with the artist and name
+  struct song_node * cmp = malloc(sizeof(struct song_node));
+  strcpy(cmp->artist,artist);
+  strcpy(cmp->name, name);
+
+  // traverse through the list with temp so that start won't get messed up
+  struct song_node * temp = start;
+
+  //loop through the list, stop when the nodes are equal or at the end of the list
+  while(temp != NULL && node_cmp (cmp, temp)!= 0) temp = temp -> next;
+
+  //frees the cmp node
+  free(cmp);
+
+  return temp;
+}
 
 // find and return a pointer to the first song of an artist based on artist name
 struct song_node * find_artist(struct song_node * start, char artist[100]);
