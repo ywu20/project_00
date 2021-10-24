@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+
 // linked list song struct
 struct song_node{
 char name[100];
@@ -122,7 +123,7 @@ struct song_node * find_song(struct song_node * start, char artist[100], char na
   struct song_node * temp = start;
 
   //loop through the list, stop when the nodes are equal or at the end of the list
-  while(temp != NULL && node_cmp (cmp, temp)!= 0) temp = temp -> next;
+  while(temp && node_cmp (cmp, temp)!= 0) temp = temp -> next;
 
   //frees the cmp node
   free(cmp);
@@ -130,11 +131,50 @@ struct song_node * find_song(struct song_node * start, char artist[100], char na
   return temp;
 }
 
-// find and return a pointer to the first song of an artist based on artist name
-struct song_node * find_artist(struct song_node * start, char artist[100]);
+/********* find and return a pointer to the first song of an artist based on artist name**********/
+struct song_node * find_artist(struct song_node * start, char artist[100]){
+  // traverse through the list with temp so that start won't get messed up
+  struct song_node * temp = start;
 
+  //loop through the list, stop when the nodes are equal or at the end of the list
+  while(temp && strcmp(temp->artist, artist)!= 0) temp = temp -> next;
+
+  return temp;
+}
+
+/*******calculates the length of linked list (helper funciton)************/
+int list_len (struct song_node* start){
+  int len = 0;
+  struct song_node * temp = start; //makes sure start is not modified
+
+  //calculate the length of the list
+  while(temp){
+    len++;
+    temp = temp->next;
+  }
+
+  return len;
+}
 //Return a pointer to random element in the list.
-struct song_node * rand_song(struct song_node * start);
+struct song_node * rand_song(struct song_node * start){
+
+ //handles null inputs
+  if(start==NULL) return NULL;
+
+  int len=list_len(start); //keeps track of the length of the list
+  struct song_node * temp = start; //makes sure start is not modified
+
+ //generate a random number within range
+  int x = rand()%len;
+
+//reset temp
+ temp = start;
+
+//loop to the randomly chosen node
+  while(x--)  temp = temp->next;
+
+  return temp;
+}
 
 //remove a single specified node from the list, specified by both artist and song name.
 
