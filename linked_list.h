@@ -15,6 +15,9 @@ struct song_node * insert_order(struct song_node * start, char artist[100],char 
 //compare song nodes, returns < 0 if n1 goes before n2, if 0 the same, if > 0 n2 goes before n1
 int node_cmp (struct song_node * n1, struct song_node * n2);
 
+// prints a single node
+void print_node (struct song_node * node);
+
 //print the entire list
 void print_list (struct song_node * node);
 
@@ -33,4 +36,7 @@ struct song_node * remove_node(struct song_node * start, char artist[100], char 
 
 //free the entire list
 struct song_node * free_list(struct song_node * start);
+
+//free entire list with print test statements
+struct song_node * free_list_print(struct song_node * start);
 #endif

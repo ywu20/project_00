@@ -4,8 +4,8 @@
 
 // linked list song struct
 struct song_node{
-char name[100];
 char artist[100];
+char name[100];
 struct song_node *next;
 };
 
@@ -58,6 +58,7 @@ struct song_node * insert_order(struct song_node * start, char artist[100],char 
  //initialize new struct
   strcpy(p->artist,artist);
   strcpy(p->name, name);
+  p->next = NULL;
 
 //if the list is empty
  if(start == NULL) return p;
@@ -100,15 +101,18 @@ struct song_node * insert_order(struct song_node * start, char artist[100],char 
 /***********prints a node******************/
 void print_node (struct song_node * node){
   if (node == NULL) printf("NULL\n");
-  else printf("{%s, %s, %p }\n", node -> artist, node -> name, node ->next);
+  else printf("{%s, %s}\n", node -> artist, node -> name);
+
 }
 
 /***********print the entire list*****************/
 void print_list (struct song_node * node){
+  printf("[ \n");
   while(node){
   print_node(node);
   node = node ->next;
 }
+printf("]\n");
 }
 
 
@@ -176,9 +180,75 @@ struct song_node * rand_song(struct song_node * start){
   return temp;
 }
 
-//remove a single specified node from the list, specified by both artist and song name.
+/**********remove a single specified node from the list, specified by both artist and song name.*********/
 
-struct song_node * remove_node(struct song_node * start, char artist[100], char name[100]);
+struct song_node * remove_node(struct song_node * start, char artist[100], char name[100]){
+  // if the current node is not null
+  if(start){
 
-//free the entire list
-struct song_node * free_list(struct song_node * start);
+    //creates a temporary node to use node comparison
+    struct song_node * cmp = malloc(sizeof(struct song_node));
+    strcpy(cmp->artist,artist);
+    strcpy(cmp->name, name);
+
+    //if the node to be removed is found
+    if(node_cmp(cmp, start) == 0){
+
+    //stores the next item on the list
+    struct song_node * out = start -> next;
+
+    //frees the temp node and the node to be removed.
+      free(cmp);
+      free(start);
+      return out;
+    }else{
+      //frees temp node
+      free(cmp);
+
+      //connect what's before the removed item to what's after it.
+      start -> next = remove_node(start ->next, artist, name);
+    }
+  }
+
+  //returns start of list
+  return start;
+}
+
+/**********free the entire list*************/
+struct song_node * free_list(struct song_node * start){
+  struct song_node * temp = start;
+  while(start->next){
+   start = start->next;
+
+   //free current node
+   free (temp);
+
+   //go to next node
+   temp=start;
+
+  }
+  free(temp);
+  return start;
+}
+
+/**************free entire list with print test statements***********/
+struct song_node * free_list_print(struct song_node * start){
+  printf("============FREE LIST TEST============\n");
+  struct song_node * temp = start;
+  while(start->next){
+   start = start->next;
+   //free current node
+   printf("frees:");
+   print_node(temp);
+   free (temp);
+
+   //go to next node
+   temp=start;
+
+  }
+  printf("frees:");
+  print_node(temp);
+  free(temp);
+  printf("======================================\n\n");
+  return start;
+}
