@@ -14,15 +14,15 @@ struct song_node * construct_list (struct song_node * start, char type){
  start = insert_front (start, "pearl jam", "alive");
  start = insert_front (start, "pearl jam", "even flow");
  start = insert_front (start, "pearl jam", "yellow ledbetter");
- start = insert_front (start, "pap", "I don't know");
+ start = insert_front (start, "pfp", "I don't know");
  start = insert_front (start, "pink", "I don't know");
  start = insert_front (start, "pink", "space");
  start = insert_front (start, "pink floyd", "time");
 
  //prints the list
- printf("========insert_front initialize test========\n");
+ printf("\n========insert_front initialize test========\n");
  print_list(start);
- printf("============================================\n\n");
+ printf("\n============================================\n\n");
  }
 
  else{
@@ -38,9 +38,9 @@ struct song_node * construct_list (struct song_node * start, char type){
  start = insert_order (start, "pink", "I don't know");
 
  //prints the list
- printf("========insert_order initialize test========\n");
+ printf("\n========insert_order initialize test========\n");
  print_list(start);
- printf("============================================\n\n");
+ printf("\n============================================\n\n");
 }
 
  return start;
@@ -50,118 +50,119 @@ struct song_node * construct_list (struct song_node * start, char type){
 void find_node_test(struct song_node * start, char type){
   struct song_node * test;
   if(type == 's'){
-  printf("========find song with both song and artist test========\n");
+  printf("\n========find song with both song and artist test========\n");
   //find the start
   test = find_song(start,"pearl jam", "alive");
-  printf ("find song: pearl jam, alive\n");
+  printf ("\nfind song: pearl jam, alive\n");
   print_node(test);
-  printf("====================\n");
+  printf("\n====================\n");
 
   //find the middle
   test = find_song(start,"pearl jam", "yellow ledbetter");
-  printf ("find song: pearl jam, yellow ledbetter\n");
+  printf ("\nfind song: pearl jam, yellow ledbetter\n");
   print_node(test);
-  printf("====================\n");
+  printf("\n====================\n");
 
   //find the end
   test = find_song(start,"pink floyd", "time");
-  printf ("find song: pink floyd, time\n");
+  printf ("\nfind song: pink floyd, time\n");
   print_node(test);
-  printf("====================\n");
+  printf("\n====================\n");
 
   //cannot find
   test = find_song(start,"pink d", "time");
-  printf ("find song: NULL\n");
+  printf ("\nfind song: NULL\n");
   print_node(test);
-  printf("====================\n");
+  printf("\n====================\n");
 
-  printf("prints the list to make sure it's not modified\n");
+  printf("\nprints the list to make sure it's not modified\n");
   print_list(start);
-  printf("========================================================\n\n");
+  printf("\n========================================================\n\n");
 }else{
-  printf("========find song with artist test========\n");
+  printf("\n========find song with artist test========\n");
   //find the start, artist with multiple songs
   test = find_artist(start,"pearl jam");
   printf ("find artist: pearl jam, alive\n");
   print_node(test);
-  printf("====================\n");
+  printf("\n====================\n");
 
   //find the middle, with multiple artists
   test = find_artist(start,"pink");
-  printf ("find artist: pink, I don't know\n");
+  printf ("\nfind artist: pink, I don't know\n");
   print_node(test);
-  printf("====================\n");
+  printf("\n====================\n");
 
   //find the end, single artist
   test = find_artist(start,"pink floyd");
-  printf ("find artist: pink floyd, time\n");
+  printf ("\nfind artist: pink floyd, time\n");
   print_node(test);
-  printf("====================\n");
+  printf("\n====================\n");
 
   //cannot find
   test = find_artist(start,"pink d");
-  printf ("find artist: NULL\n");
+  printf ("\nfind artist: NULL\n");
   print_node(test);
-  printf("====================\n");
+  printf("\n====================\n");
 
-  printf("prints the list to make sure it's not modified\n");
+  printf("\nprints the list to make sure it's not modified\n");
   print_list(start);
-  printf("========================================================\n\n");
+  printf("\n========================================================\n\n");
 }
 }
 
 void rand_test(struct song_node * start){
-printf("======================RANDOM SONG TEST=======================\n");
+printf("\n======================RANDOM SONG TEST=======================\n");
 struct song_node * test;
 struct song_node * node = NULL;
 
 //test empty list
-printf("======== empty list test========\n");
+printf("\n======== empty list test========\n");
 test = rand_song(node);
 print_node(test);
 
 
 //test one element
-printf("===== one element in list test====\n");
+printf("\n===== one element in list test====\n");
 node = insert_front(node,"hello", "world");
 test = rand_song(node);
 print_node(test);
 
 //test regular list
-printf("======== regular list test========\n");
+printf("\n======== regular list test========\n");
 int i;
 for(i=0;i<5;i++){
   print_node(rand_song(start));
+  printf("\n");
 }
-printf("===================================\n");
+printf("\n===================================\n");
 
-printf("prints the list to make sure it's not modified\n");
+printf("\nprints the list to make sure it's not modified\n");
 print_list(start);
-printf("========================================================\n\n");
+printf("\n========================================================\n\n");
 
 }
 
 void remove_node_test(struct song_node * start){
-  printf("================REMOVE NODE TEST================\n");
-  printf("=============Remove NULL list test==========\n");
+  printf("\n================REMOVE NODE TEST================\n");
+  printf("\n=============Remove NULL list test==========\n");
   struct song_node * empty = NULL;
-  printf("list before removal: \n");
+  printf("\nlist before removal: \n");
   print_list(empty);
   empty = remove_node(empty, "pearl jam", "alive");
   printf("\nlist after removal: \n");
   print_list(empty);
-  printf("============================================\n");
+  printf("\n============================================\n");
 
-  printf("=============Remove not found test==========\n");
-  printf("list before removal: \n");
+  printf("\n=============Remove not found test==========\n");
+  printf("\nlist before removal: \n");
   print_list(start);
   start = remove_node(start, "pel jam", "alive");
   printf("\nlist after removal: \n");
   print_list(start);
-  printf("==========================================\n");
-  printf("========remove random node until list is empty========\n");
+  printf("\n==========================================\n");
+  printf("\n========remove random node until list is empty========\n");
   while(start){
-    printf("list before removal: \n");
+    printf("\nlist before removal: \n");
     print_list(start);
     struct song_node * rm = rand_song(start);
     printf("\nrandom node chosen: \n");
@@ -170,14 +171,31 @@ void remove_node_test(struct song_node * start){
     //start= remove_node(start, "pearl jam","even flow");
     printf("\nlist after removal: \n");
     print_list(start);
-    printf("=========================\n");
+    printf("\n=========================\n");
   }
 
 }
 
+void add_song_test(struct song_node ** lib){
+  printf("\n===========ADD SONG TEST========\n");
+  add_song (lib, "pink", "space"); // insert empty
+  add_song (lib, "pearl jam", "even flow"); //insert to the front
+  add_song (lib, "pearl jam", "yellow ledbetter"); //insert to middle
+  add_song (lib, "pearl jam", "even flow"); //insert equals
+  add_song (lib, "pearl jam", "alive");
+  add_song (lib, "pink floyd", "time"); //insert end
+  add_song (lib, "pfp", "I don't know");
+  add_song (lib, "pink", "I don't know");
+  add_song (lib, "zink", "Me don't know");
+  add_song (lib, "Zhou Shen", "dA YU"); //caps
+  add_song (lib, "&UM", "b*lA()"); //random char front
+  add_song (lib, "", "do oyou"); //empty artist
+
+  print_lib(lib);
+}
 int main(){
 
-
+printf("LINKED LIST TEST \n");
  // construct a linked list for test
  srand(time(NULL));
  struct song_node * start;
@@ -200,5 +218,9 @@ int main(){
 
  free_list_print(start);
 
+printf("LIBRARY TEST: \n");
+
+struct song_node ** lib = construct_lib();
+add_song_test(lib);
  return 0;
 }

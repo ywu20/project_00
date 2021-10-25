@@ -39,4 +39,7 @@ struct song_node * free_list(struct song_node * start);
 
 //free entire list with print test statements
 struct song_node * free_list_print(struct song_node * start);
+
+//calculates the length of linked list (helper funciton)
+int list_len (struct song_node* start);
 #endif

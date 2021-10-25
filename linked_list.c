@@ -101,15 +101,16 @@ struct song_node * insert_order(struct song_node * start, char artist[100],char 
 /***********prints a node******************/
 void print_node (struct song_node * node){
   if (node == NULL) printf("NULL\n");
-  else printf("{%s, %s}\n", node -> artist, node -> name);
+  else printf("{%s, %s}", node -> artist, node -> name);
 
 }
 
 /***********print the entire list*****************/
 void print_list (struct song_node * node){
-  printf("[ \n");
+  printf("[");
   while(node){
   print_node(node);
+  printf("|");
   node = node ->next;
 }
 printf("]\n");
@@ -184,6 +185,7 @@ struct song_node * rand_song(struct song_node * start){
 
 struct song_node * remove_node(struct song_node * start, char artist[100], char name[100]){
   // if the current node is not null
+  if(start == NULL) return NULL;
   if(start){
 
     //creates a temporary node to use node comparison
@@ -240,6 +242,7 @@ struct song_node * free_list_print(struct song_node * start){
    //free current node
    printf("frees:");
    print_node(temp);
+   printf("\n");
    free (temp);
 
    //go to next node
@@ -248,7 +251,8 @@ struct song_node * free_list_print(struct song_node * start){
   }
   printf("frees:");
   print_node(temp);
+  printf("\n");
   free(temp);
-  printf("======================================\n\n");
+  printf("\n======================================\n\n");
   return start;
 }
