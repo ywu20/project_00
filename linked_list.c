@@ -101,7 +101,7 @@ struct song_node * insert_order(struct song_node * start, char artist[100],char 
 /***********prints a node******************/
 void print_node (struct song_node * node){
   if (node == NULL) printf("NULL\n");
-  else printf("{%s, %s}", node -> artist, node -> name);
+  else printf("{%s, %s} ", node -> artist, node -> name);
 
 }
 
@@ -218,6 +218,7 @@ struct song_node * remove_node(struct song_node * start, char artist[100], char 
 
 /**********free the entire list*************/
 struct song_node * free_list(struct song_node * start){
+  if(start != NULL){
   struct song_node * temp = start;
   while(start->next){
    start = start->next;
@@ -230,11 +231,13 @@ struct song_node * free_list(struct song_node * start){
 
   }
   free(temp);
+}
   return start;
 }
 
 /**************free entire list with print test statements***********/
 struct song_node * free_list_print(struct song_node * start){
+  if(start != NULL){
   printf("============FREE LIST TEST============\n");
   struct song_node * temp = start;
   while(start->next){
@@ -254,5 +257,7 @@ struct song_node * free_list_print(struct song_node * start){
   printf("\n");
   free(temp);
   printf("\n======================================\n\n");
+}
+
   return start;
 }

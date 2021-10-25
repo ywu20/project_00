@@ -31,5 +31,8 @@ void del_song(struct song_node ** lib, char _artist[100], char _song[100]);
 //Clear out all the linked lists in the library.
 struct song_node ** clear_lib(struct song_node ** lib);
 
+//clear lib with print statement
+struct song_node ** clear_lib_test(struct song_node ** lib);
+
 
 #endif
